@@ -1,0 +1,237 @@
+@import 'tailwindcss';
+
+/* Design tokens. Light is the default; dark follows the OS unless the visitor picked a theme. */
+:root {
+  --bg: #f6f6f3;
+  --surface: #ffffff;
+  --surface-2: #eeeeea;
+  --ink: #14171a;
+  --muted: #575d64;
+  --faint: #8b9097;
+  --line: #e2e2dd;
+  --line-strong: #cfcfc8;
+  --accent: #0f6b63;
+  --accent-ink: #ffffff;
+  --accent-soft: #e3f0ed;
+  --shadow: 0 1px 2px rgb(20 23 26 / 0.04), 0 8px 24px -12px rgb(20 23 26 / 0.12);
+  --shadow-lg: 0 2px 4px rgb(20 23 26 / 0.04), 0 24px 48px -16px rgb(20 23 26 / 0.22);
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0f1113;
+    --surface: #16191c;
+    --surface-2: #1d2124;
+    --ink: #eceeef;
+    --muted: #a3a9af;
+    --faint: #737a81;
+    --line: #262a2e;
+    --line-strong: #353a3f;
+    --accent: #5ec4b6;
+    --accent-ink: #0b1f1c;
+    --accent-soft: #15302c;
+    --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
+    --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.6);
+    color-scheme: dark;
+  }
+}
+
+:root[data-theme='dark'] {
+  --bg: #0f1113;
+  --surface: #16191c;
+  --surface-2: #1d2124;
+  --ink: #eceeef;
+  --muted: #a3a9af;
+  --faint: #737a81;
+  --line: #262a2e;
+  --line-strong: #353a3f;
+  --accent: #5ec4b6;
+  --accent-ink: #0b1f1c;
+  --accent-soft: #15302c;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.3), 0 8px 24px -12px rgb(0 0 0 / 0.5);
+  --shadow-lg: 0 2px 4px rgb(0 0 0 / 0.3), 0 24px 48px -16px rgb(0 0 0 / 0.6);
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-ink: var(--accent-ink);
+  --color-accent-soft: var(--accent-soft);
+  --font-sans: 'Geist Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: 'Geist Mono Variable', ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+  --shadow-card: var(--shadow);
+  --shadow-lift: var(--shadow-lg);
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html {
+  background: var(--bg);
+  -webkit-text-size-adjust: 100%;
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+/* Lock page scroll while a modal dialog is open. */
+html:has(dialog[open]) {
+  overflow: hidden;
+}
+
+.container-page {
+  width: 100%;
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: clamp(1rem, 4vw, 2rem);
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* Section-entry reveal. Content stays visible when motion is reduced. */
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+[data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Thin reading-progress bar driven by scroll position, where supported. */
+.scroll-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .scroll-progress {
+    display: block;
+    transform-origin: 0 50%;
+    animation: grow linear both;
+    animation-timeline: scroll(root block);
+  }
+  @keyframes grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+}
+
+/* Pointer-following highlight on project cards (precise pointers only). */
+.spotlight {
+  --mx: 50%;
+  --my: 0%;
+}
+@media (hover: hover) and (pointer: fine) {
+  .spotlight::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s;
+    background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 9%, transparent), transparent 60%);
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+}
+
+/* Content swap inside the hero explorer when a new stage is selected. */
+.swap-in {
+  animation: swap-in 0.4s var(--ease-out);
+}
+@keyframes swap-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+}
+
+dialog::backdrop {
+  background: rgb(10 12 14 / 0.55);
+  backdrop-filter: blur(3px);
+}
+dialog[open] {
+  animation: dialog-in 0.28s var(--ease-out);
+}
+dialog[open]::backdrop {
+  animation: fade-in 0.28s ease-out;
+}
+@keyframes dialog-in {
+  from {
+    opacity: 0;
+    transform: translateY(16px) scale(0.985);
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+  }
+  .scroll-progress {
+    display: none;
+  }
+}
