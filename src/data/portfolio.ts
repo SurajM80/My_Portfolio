@@ -214,7 +214,7 @@ export const projects: Project[] = [
   {
     id: 'uidai-drishti',
     title: 'Project Drishti',
-    context: 'UIDAI Data Hackathon 2026 · team submission',
+    context: 'UIDAI Data Hackathon 2026 · team lead',
     year: '2026',
     areas: ['analytics'],
     summary:
@@ -231,7 +231,7 @@ export const projects: Project[] = [
     stack: ['Python', 'Pandas', 'Matplotlib', 'Seaborn'],
     repo: 'https://github.com/SurajM80/UIDAI-Data-Hackathon',
     primaryFile: 'Enrolment Dataset (1).ipynb',
-    note: 'Hackathon team project (Team UIDAI_4318).',
+    note: 'Led the hackathon team (Team UIDAI_4318).',
   },
   {
     id: 'finance-tracker',
@@ -377,7 +377,7 @@ export const skillGroups: SkillGroup[] = [
     title: 'Programming & analysis',
     skills: [
       { name: 'Python', projectIds: ['streaming-etl', 'starbucks-warehouse', 'uidai-drishti', 'finance-tracker', 'housing-regression', 'rock-vs-mine', 'netflix-eda'] },
-      { name: 'SQL', note: 'CTEs, window functions', projectIds: ['olist-supply-chain', 'streaming-etl', 'finance-tracker'] },
+      { name: 'SQL', projectIds: ['olist-supply-chain', 'streaming-etl', 'finance-tracker'] },
       { name: 'Pandas', projectIds: ['streaming-etl', 'starbucks-warehouse', 'uidai-drishti', 'finance-tracker', 'housing-regression', 'rock-vs-mine', 'netflix-eda'] },
       { name: 'NumPy', projectIds: ['finance-tracker', 'housing-regression', 'rock-vs-mine'] },
       { name: 'SciPy' },
@@ -448,6 +448,7 @@ export const education = [
 export const credentials = [
   { title: 'Career Essentials in Data Analysis', issuer: 'Microsoft & LinkedIn', kind: 'Certification' },
   { title: 'AWS Academy Cloud Foundations', issuer: 'AWS Academy', kind: 'Certification' },
+  { title: 'UIDAI Data Hackathon 2026', issuer: 'Team lead · Project Drishti', kind: 'Hackathon' },
   { title: 'IDEATHON 2.0', issuer: 'Organising committee member', kind: 'Hackathon' },
 ];
 
