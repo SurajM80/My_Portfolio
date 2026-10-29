@@ -146,7 +146,7 @@ export const projects: Project[] = [
     approach: [
       'Python script requests the TMDB trending-movies endpoint and paginates across up to 50 pages per run.',
       'Nested JSON is flattened into a structured table; missing release dates are handled and dates and floats are typed explicitly.',
-      'MySQL table keyed on movie_id; INSERT IGNORE keeps daily re-runs from failing on duplicate keys.',
+      'Loads into a MySQL table keyed on movie_id via mysql-connector-python; INSERT IGNORE keeps daily re-runs from failing on duplicate keys.',
       'A follow-up run re-fetches any pages skipped on the first pass, so gaps are filled without reloading everything.',
       'Power BI connects directly to MySQL: KPI cards, a top-10 ranking, a popularity-vs-rating scatter plot and a release-date trend.',
     ],
@@ -157,7 +157,7 @@ export const projects: Project[] = [
     stack: ['Python', 'REST API', 'Pandas', 'MySQL', 'Power BI'],
     repo: 'https://github.com/SurajM80/End-to-End-Streaming-Analytics-Pipeline',
     primaryFile: 'Python_Scripts/TMDB_Data_Pipeline.ipynb',
-    // The resume mentions SQLAlchemy for this project; the public notebook uses mysql-connector-python.
+    // Confirmed with Suraj: this pipeline uses mysql-connector-python, not SQLAlchemy (the resume line is outdated).
     image: { base: '/projects/streaming-etl', alt: 'Power BI dashboard with KPI cards, a top-10 trending movies bar chart, a popularity vs rating scatter plot and a release-date histogram', width: 1280, height: 708 },
   },
   {
